@@ -6,12 +6,11 @@
   "scripts": {
     "start": "ts-node ./index.ts",
     "build": "tsc",
-    "dev": "ts-node-dev --respawn ./index.ts",
+    "start:dev": "ts-node-dev --respawn ./index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix"
   },
-  "author": "Andrei Auchynnikau",
   "keywords": [],
   "license": "ISC",
   "devDependencies": {

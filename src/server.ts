@@ -3,6 +3,7 @@ import { PlayerManager } from './playerManager';
 import { RoomManager } from './roomManager';
 import { GameManager } from './gameManager';
 import { Player, WebSocketMessage } from './types';
+import { connect } from 'http2';
 
 export class BattleshipServer {
   private wss: WebSocketServer;
@@ -92,7 +93,10 @@ export class BattleshipServer {
   }
 
   private handleCreateRoom(ws: WebSocket) {
-    const { name, index } = this.playerManager.getPlayer(this.currentUserIndex) as Player;
+    const playerIndex = this.getPlayerIndexByConnection(ws);
+    if (!playerIndex) return;
+
+    const { name, index } = this.playerManager.getPlayer(playerIndex) as Player;
     const createRoomResponse = this.roomManager.createRoom(name, index);
     this.broadcast(createRoomResponse);
     ws.send(JSON.stringify(createRoomResponse));

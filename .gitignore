@@ -1,16 +1,31 @@
-# dependencies
-/node_modules
+*.*~
 
-# System Files
-.DS_Store
-Thumbs.db
-[Dd]esktop.ini
+.vscode
+.vs
+.idea
 
-# Links
-*.lnk
-.idea/
-*.PEM
-.vscode/
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 
 # Logs
-npm-debug.log
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Build results
+dist

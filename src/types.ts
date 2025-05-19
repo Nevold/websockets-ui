@@ -43,6 +43,6 @@ export interface Game {
 
 export interface WebSocketMessage {
   type: string;
-  data: any;
+  data: unknown;
   id: number;
 }

@@ -74,15 +74,15 @@ export class BattleshipServer {
     }
   }
 
-  private handleRegistration(ws: WebSocket, data: string) {
-    const { name, password } = JSON.parse(data);
+  private handleRegistration(ws: WebSocket, data: unknown) {
+    const { name, password } = JSON.parse(data as string);
 
     const response = this.playerManager.registerPlayer(name, password);
 
-    const isUserCorrect = !JSON.parse(response.data).error;
+    const isUserCorrect = !JSON.parse(response.data as string).error;
 
     if (isUserCorrect) {
-      this.currentUserIndex = (JSON.parse(response.data) as Player).index;
+      this.currentUserIndex = (JSON.parse(response.data as string) as Player).index;
       this.connections.set(this.currentUserIndex, ws);
 
       this.broadcast(this.roomManager.getRoomsUpdate());
@@ -98,14 +98,14 @@ export class BattleshipServer {
     ws.send(JSON.stringify(createRoomResponse));
   }
 
-  private handleAddUserToRoom(ws: WebSocket, data: string) {
+  private handleAddUserToRoom(ws: WebSocket, data: unknown) {
     const playerIndex = this.getPlayerIndexByConnection(ws);
     if (!playerIndex) return;
 
     const player = this.playerManager.getPlayer(playerIndex);
     if (!player) return;
 
-    const { indexRoom } = JSON.parse(data);
+    const { indexRoom } = JSON.parse(data as string);
     const response = this.roomManager.addUserToRoom(indexRoom, player.name, playerIndex);
 
     if (response) {
@@ -131,7 +131,7 @@ export class BattleshipServer {
             JSON.stringify({
               ...gameResponse,
               data: JSON.stringify({
-                ...JSON.parse(gameResponse.data),
+                ...JSON.parse(gameResponse.data as string),
                 idPlayer: player2.index,
               }),
             }),
@@ -141,8 +141,8 @@ export class BattleshipServer {
     }
   }
 
-  private handleAddShips(ws: WebSocket, data: string) {
-    const { gameId, ships, indexPlayer } = JSON.parse(data);
+  private handleAddShips(ws: WebSocket, data: unknown) {
+    const { gameId, ships, indexPlayer } = JSON.parse(data as string);
 
     const response = this.gameManager.addShips(gameId, indexPlayer, ships);
 

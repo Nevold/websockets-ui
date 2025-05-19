@@ -7,12 +7,12 @@ export class PlayerManager {
     const existingPlayer = this.players.find((p) => p.name === name);
 
     if (existingPlayer) {
-      if (existingPlayer.name === name) {
+      if (existingPlayer.password === password) {
         const data = JSON.stringify({
           name: existingPlayer.name,
           index: existingPlayer.index,
-          error: true,
-          errorText: 'User already connected',
+          error: false,
+          errorText: '',
         });
 
         return {
@@ -24,8 +24,8 @@ export class PlayerManager {
         const data = JSON.stringify({
           name,
           index: 0,
-          error: false,
-          errorText: '',
+          error: true,
+          errorText: 'Incorrect password',
         });
 
         return {

@@ -79,14 +79,15 @@ export class BattleshipServer {
 
     const response = this.playerManager.registerPlayer(name, password);
 
-    if (!response.data.error) {
+    const isUserCorrect = !JSON.parse(response.data).error;
+
+    if (isUserCorrect) {
       this.currentUserIndex = (JSON.parse(response.data) as Player).index;
       this.connections.set(this.currentUserIndex, ws);
 
       this.broadcast(this.roomManager.getRoomsUpdate());
       this.broadcast(this.playerManager.getWinnersUpdate());
     }
-
     ws.send(JSON.stringify(response));
   }
 
